@@ -1,0 +1,15 @@
+{
+  "name": "safesplit-blockchain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SafeSplit — local Ethereum (Hardhat) + HashStore smart contract.",
+  "scripts": {
+    "node": "hardhat node --hostname 0.0.0.0",
+    "deploy": "hardhat run scripts/deploy.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.17"
+  }
+}
