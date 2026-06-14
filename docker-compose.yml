@@ -1,0 +1,15 @@
+name: safesplit-blockchain
+
+services:
+    safesplit-hardhat:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        image: safesplit-hardhat
+        container_name: safesplit-hardhat
+        restart: unless-stopped
+        command: ["sh", "./docker/start.sh"]
+        ports:
+            - 49545:8545     # Hardhat JSON-RPC (MetaMask RPC URL)
+        volumes:
+            - .:/app
