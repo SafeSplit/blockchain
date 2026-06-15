@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-ethers");
+require("hardhat-web-ui");
 
 /**
  * SafeSplit Hardhat config.

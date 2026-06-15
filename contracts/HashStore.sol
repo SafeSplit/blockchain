@@ -17,10 +17,19 @@ contract HashStore {
     event HashRecorded(bytes32 indexed eventId, bytes32 hash);
 
     function record(bytes32 eventId, bytes32 hash) external {
-        // Forbid overwriting an already-recorded fingerprint (immutability).
-        require(hashes[eventId] == bytes32(0), "Fingerprint already recorded for this eventId");
-        hashes[eventId] = hash;
-        emit HashRecorded(eventId, hash);
+        bytes32 existing = hashes[eventId];
+
+        // Idempotent (D4): re-recording the SAME hash is a no-op; a DIFFERENT hash is rejected.
+        // This keeps immutability while letting multiple anchorers retry safely.
+        require(
+            existing == bytes32(0) || existing == hash,
+            "A different fingerprint is already recorded for this eventId"
+        );
+
+        if (existing == bytes32(0)) {
+            hashes[eventId] = hash;
+            emit HashRecorded(eventId, hash);
+        }
     }
 
     function get(bytes32 eventId) external view returns (bytes32) {
